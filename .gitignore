@@ -34,4 +34,4 @@ Temporary Items
 .apdisk
 
 # Phpstorm
-.idea/*
+*/.idea/*
