@@ -1,6 +1,7 @@
 <?php
+    echo "Hello world";
 
-phpinfo();
+//phpinfo();
 exit;
 
 include("common/define.php");
