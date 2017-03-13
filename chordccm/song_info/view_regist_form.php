@@ -118,6 +118,7 @@ include("../common/dbclose.php");
 	</li>
 	<li class="regist_form_li"><span>전체 마디 수</span><br /> <input type='text' name='bar_count' id='bar_count' style="width:50px;" value="<?=$result_song_info[0]['bar_count']?>" /></li>
 	<li class="regist_form_li"><span>전체 가사 절 수</span><br /> <input type='text' name='lyric_count' id='lyric_count' style="width:50px;" value="<?=$result_song_info[0]['lyric_count']?>" /></li>
+    <li class="regist_form_li"><span>후렴 시작 절</span><br /> <input type='text' name='lyric_refrain_start_bar' id='lyric_refrain_start_bar' style="width:50px;" value="<?=$result_song_info[0]['lyric_refrain_start_bar']?>" /></li>
 	<br />
 	<? if($song_info_id == ""){ ?>
 		<button onclick="regist();return false;" style="width:300px;height:30px;">다음 단계</button>
@@ -143,6 +144,7 @@ include("../common/dbclose.php");
 		var chord_option = $.trim($('#chord_option').val());
 		var bar_count = $.trim($('#bar_count').val());
 		var lyric_count = $.trim($('#lyric_count').val());
+        var lyric_refrain_start_bar = $.trim($('#lyric_refrain_start_bar').val());
 		
 		if(!song_title){
 			alert('곡 제목을 입력하세요.');
@@ -188,7 +190,8 @@ include("../common/dbclose.php");
 				chord_pitch:chord_pitch,
 				chord_option:chord_option,
 				bar_count:bar_count,
-				lyric_count:lyric_count
+				lyric_count:lyric_count,
+                lyric_refrain_start_bar:lyric_refrain_start_bar
 			};
  		
  		$.ajax({      

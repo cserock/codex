@@ -22,11 +22,12 @@ include("../common/dbopen.php");
 									`chord_pitch`,
 									`chord_option`,
 									`bar_count`,
-									`lyric_count`
-								) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+									`lyric_count`,
+									`lyric_refrain_start_bar`
+								) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
 		);
 		
-		$stmt->bind_param('sisssssssii', $song_title, $song_number, $song_lyric_start, $song_lyric_refrain, $song_lyric_keyword, $beat, $chord, $chord_pitch, $chord_option, $bar_count, $lyric_count);
+		$stmt->bind_param('sisssssssiii', $song_title, $song_number, $song_lyric_start, $song_lyric_refrain, $song_lyric_keyword, $beat, $chord, $chord_pitch, $chord_option, $bar_count, $lyric_count, $lyric_refrain_start_bar);
 	} else {
 		$stmt = $mysqli->prepare("UPDATE song_info SET
 									song_title=?,
@@ -39,10 +40,11 @@ include("../common/dbopen.php");
 									chord_pitch=?,
 									chord_option=?,
 									bar_count=?,
-									lyric_count=?
+									lyric_count=?,
+									lyric_refrain_start_bar=?
 									WHERE song_info_id=?");
 		
-		$stmt->bind_param('sisssssssiii', $song_title, $song_number, $song_lyric_start, $song_lyric_refrain, $song_lyric_keyword, $beat, $chord, $chord_pitch, $chord_option, $bar_count, $lyric_count, $song_info_id);
+		$stmt->bind_param('sisssssssiiii', $song_title, $song_number, $song_lyric_start, $song_lyric_refrain, $song_lyric_keyword, $beat, $chord, $chord_pitch, $chord_option, $bar_count, $lyric_count, $lyric_refrain_start_bar, $song_info_id);
 		
 		if(isset($_REQUEST['song_info_id'])){
 			$song_info_id = trim($_REQUEST['song_info_id']);
@@ -116,7 +118,13 @@ include("../common/dbopen.php");
 	} else {
 		$lyric_count = "";
 	}
-	
+
+    if(isset($_REQUEST['lyric_refrain_start_bar'])){
+        $lyric_refrain_start_bar = trim($_REQUEST['lyric_refrain_start_bar']);
+    } else {
+        $lyric_refrain_start_bar = "";
+    }
+
 	$stmt->execute();
 	// printf("%d Row inserted.\n", $stmt->affected_rows);
 	
